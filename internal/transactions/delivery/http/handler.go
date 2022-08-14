@@ -39,11 +39,12 @@ func (h *TransactionsHandler) Transfer(c *fiber.Ctx) error {
 		return nil
 	}
 
+	transactionID := ""
 	switch transactionRequest.Type {
 	case "withdraw":
-		err = h.usecase.Withdraw(ctx, transactionRequest.UserID, transactionRequest.Amount)
+		transactionID, err = h.usecase.Withdraw(ctx, transactionRequest.UserID, transactionRequest.Amount)
 	case "deposit":
-		err = h.usecase.Deposit(ctx, transactionRequest.UserID, transactionRequest.Amount)
+		transactionID, err = h.usecase.Deposit(ctx, transactionRequest.UserID, transactionRequest.Amount)
 	}
 	if err != nil {
 		c.Context().Error(err.Error(), http.StatusBadRequest)
@@ -52,7 +53,7 @@ func (h *TransactionsHandler) Transfer(c *fiber.Ctx) error {
 		return nil
 	}
 
-	body, _ := json.Marshal("OK")
+	body, _ := json.Marshal(transactionID)
 	c.Context().Success("application:json", body)
 
 	return nil

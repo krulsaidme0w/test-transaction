@@ -2,8 +2,6 @@ package usecase
 
 import (
 	"context"
-
-	"test-transaction/internal/transactions"
 )
 
 type transactionsUseCase struct {
@@ -16,10 +14,10 @@ func NewTransactionsUseCase(repository transactions.Repository) *transactionsUse
 	}
 }
 
-func (u *transactionsUseCase) Withdraw(ctx context.Context, userID string, amount int64) error {
+func (u *transactionsUseCase) Withdraw(ctx context.Context, userID string, amount int64) (string, error) {
 	return u.repository.Withdraw(ctx, userID, amount)
 }
 
-func (u *transactionsUseCase) Deposit(ctx context.Context, userID string, amount int64) error {
+func (u *transactionsUseCase) Deposit(ctx context.Context, userID string, amount int64) (string, error) {
 	return u.repository.Deposit(ctx, userID, amount)
 }

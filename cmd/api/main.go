@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	_ "github.com/lib/pq"
 
 	"test-transaction/internal/transactions/delivery/http"
@@ -13,7 +14,7 @@ import (
 )
 
 const (
-	dbString = "host=localhost port=5432 user=user password=password dbname=test"
+	dbString = "host=0.0.0.0 port=5432 user=user password=password dbname=test sslmode=disable"
 	addr     = ":8000"
 )
 
@@ -29,8 +30,8 @@ func main() {
 	handler := http.NewHandler(usecase)
 
 	router := fiber.New()
-	group := router.Group("/test")
-	group.Post("/transfer", handler.Transfer)
+	router.Use(logger.New())
+	router.Post("/transfer", handler.Transfer)
 
 	if err := router.Listen(addr); err != nil {
 		log.Fatal(err)
