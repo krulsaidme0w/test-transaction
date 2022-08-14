@@ -2,6 +2,8 @@ package usecase
 
 import (
 	"context"
+
+	"test-transaction/internal/transactions"
 )
 
 type transactionsUseCase struct {
