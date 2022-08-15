@@ -54,5 +54,5 @@ go run cmd/api/main.go
     
 ### TODO
 
-##### - [ ] Dockerfile's for both services
-##### - [ ] Api to get user balance
+- [ ] Dockerfile's for both services
+- [ ] Api to get user balance
