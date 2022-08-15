@@ -25,13 +25,14 @@ func main() {
 	}
 	defer db.Close()
 
-	repository := repository.NewUTransactionsRepository(db)
+	repository := repository.NewTransactionsRepository(db)
 	usecase := usecase.NewTransactionsUseCase(repository)
 	handler := http.NewHandler(usecase)
 
 	router := fiber.New()
 	router.Use(logger.New())
 	router.Post("/transfer", handler.Transfer)
+	router.Get("/transaction/:id", handler.GetTransaction)
 
 	if err := router.Listen(addr); err != nil {
 		log.Fatal(err)

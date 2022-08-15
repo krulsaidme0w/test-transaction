@@ -11,7 +11,8 @@ CREATE TABLE transaction
     created_at TIMESTAMP NOT NULL,
     status VARCHAR(32) NOT NULL,
     key VARCHAR(64) NOT NULL,
-    CONSTRAINT id PRIMARY KEY (user_id, created_at) 
+    CONSTRAINT id PRIMARY KEY (user_id, created_at)
 );
 
+CREATE INDEX ON transaction(user_id, created_at) WHERE status = 'pending';
 CREATE INDEX shorturl_key_hash_index ON transaction USING hash(key);
